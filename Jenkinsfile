@@ -26,10 +26,10 @@ pipeline {
             steps {
                 script {
                     sh """
-                    zip -r anchovy-build-artifacts.zip build/
-                    aws s3 cp anchovy-build-artifacts.zip s3://dpg-november-artifact-bucket
+                    zip -r $UNIQUE_ANIMAL_IDENTIFIER-build-artifacts.zip build/
+                    aws s3 cp $UNIQUE_ANIMAL_IDENTIFIER-build-artifacts.zip s3://dpg-november-artifact-bucket
                     cd terraform
-                    terraform init -backend-config="key=anchovy.tfstate"
+                    terraform init -backend-config="key=${UNIQUE_ANIMAL_IDENTIFIER}.tfstate"
                     terraform apply --auto-approve
                     """
                 }
@@ -38,7 +38,7 @@ pipeline {
         stage("Show Domain") {
             steps {
                 script {
-                    sh script: "bash ${WORKSPACE}/scripts/display-dns.sh anchovy", returnStatus: true
+                    sh script: "bash ${WORKSPACE}/scripts/display-dns.sh ${UNIQUE_ANIMAL_IDENTIFIER}", returnStatus: true
                 }
             }
         }
