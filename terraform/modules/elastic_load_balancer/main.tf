@@ -24,6 +24,6 @@ resource "aws_elb" "elb" {
   connection_draining_timeout = 400
 
   tags = {
-    Name = "playground-${var.UNIQUE_ANIMAL_IDENTIFIER}"
+    Name = "playground-${var.anchovy}"
   }
 }
